@@ -43,6 +43,7 @@ rem Determine the directory this script is in and then remove the trailing
 rem backslash.
 set binDir=%~dp0
 set binDir=%binDir:~0,-1%
+set jarName=%programName%.jar
 
 rem //////////////////////////////////////////////////////////////////////
 rem
@@ -56,9 +57,7 @@ rem to get split into separate words. Putting the list in the "for" loop
 rem allows the spaces in directory names to be preserved with the double-
 rem quotes around each variable.
 set jar=
-for /d %%d in ("%binDir%" "%binDir%\..\lib" "%USERPROFILE%\lib" ^
-               "%USERPROFILE%\Documents\lib" "%USERPROFILE%\Dropbox\lib") ^
-               do (
+for /d %%d in ("%binDir%" "%binDir%\..\lib" "%USERPROFILE%\lib" "%USERPROFILE%\Documents\lib" "%USERPROFILE%\Dropbox\lib") do (
     set potentialJarLocation=%%~d\%jarName%
     call :writeDebug Checking potentialJarLocation=!potentialJarLocation!
     if exist "!potentialJarLocation!" (
