@@ -130,7 +130,7 @@ rem Find the highest version of Java. The last one set will be the
 rem highest version because they're processed in alphabetic order.
 rem
 if not defined java (
-    for /d %%j in () do (
+    for /d %%j in (%javaSearchDirs%) do (
         set checkJava=%%j\bin\java.exe
         call :writeDebug checkJava=!checkJava!
         if exist "!checkJava!" (
