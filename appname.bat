@@ -108,9 +108,19 @@ set java=
 
 rem Check for java.exe in JAVA_HOME\bin
 if defined JAVA_HOME (
-    set checkJava=!JAVA_HOME!\bin\java.exe
-    if exist "!checkJava!" (
-        set java=!checkJava!
+    if exist "!JAVA_HOME!" (
+        set checkJava=!JAVA_HOME!\bin\java.exe
+        if exist "!checkJava!" (
+            set java=!checkJava!
+        ) else (
+            call :writeError JAVA_HOME is broken because !JAVA_HOME!\bin\java.exe is missing.
+        )
+    ) else (
+        call :writeError The JAVA_HOME directory !JAVA_HOME! does not exist.
+    )
+    if not defined java (
+        call :writeError Please fix your JAVA_HOME environment variable.
+        call :writeError Continuing to search for a working Java installation.
     )
 )
 
@@ -148,7 +158,7 @@ if not defined java (
     call :writeError where you have installed Java.
     choice /c YN /m "Do you want to download and install Java now"
     if !ERRORLEVEL!==1 (
-        rem User answered "Yes".
+        rem The user answered "Yes".
         call :writeMessage Opening Java download web site in web browser...
         start https://www.java.com/download
         call :writeMessage Java Installation Instructions:
